@@ -2,7 +2,6 @@ from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, fil
 from config import BOT_TOKEN
 from handlers import *
 from database import init_db
-worker: python bot/bot.py
 
 async def message_handler(update, context):
     text = update.message.text
