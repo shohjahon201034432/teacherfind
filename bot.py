@@ -24,8 +24,9 @@ def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
+    
     print("✅ Bot ishga tushdi!")
-    app.run_polling()
+    app.run_polling()  # ← faqat shu kerak. Updater kerak emas!
 
 if __name__ == "__main__":
     main()
