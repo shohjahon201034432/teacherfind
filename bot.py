@@ -1,4 +1,4 @@
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
+from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 from config import BOT_TOKEN
 from handlers import *
 from database import init_db
@@ -17,16 +17,19 @@ async def message_handler(update, context: ContextTypes.DEFAULT_TYPE):
     elif "|" in text:
         await save_teacher(update, context)
     else:
-        await update.message.reply_text("Iltimos, to‘g‘ri variantni tanlang.")
+        await update.message.reply_text("Iltimos, to'g'ri variantni tanlang.")
 
 def main():
     init_db()
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    
+    # ApplicationBuilder() o'rniga Application.builder() ishlatamiz
+    app = Application.builder().token(BOT_TOKEN).build()
+    
     app.add_handler(CommandHandler("start", start_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
     
     print("✅ Bot ishga tushdi!")
-    app.run_polling()  # ← faqat shu kerak. Updater kerak emas!
+    app.run_polling()
 
 if __name__ == "__main__":
     main()
