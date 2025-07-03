@@ -1,7 +1,10 @@
-from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 from config import BOT_TOKEN
 from handlers import *
 from database import init_db
+
+async def start_handler(update, context: ContextTypes.DEFAULT_TYPE):
+    await start(update, context)
 
 async def message_handler(update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
@@ -16,15 +19,12 @@ async def message_handler(update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("Iltimos, to‘g‘ri variantni tanlang.")
 
-async def start_handler(update, context: ContextTypes.DEFAULT_TYPE):
-    await start(update, context)
-
 def main():
     init_db()
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
-    print("Bot ishga tushdi...")
+    print("✅ Bot ishga tushdi!")
     app.run_polling()
 
 if __name__ == "__main__":
