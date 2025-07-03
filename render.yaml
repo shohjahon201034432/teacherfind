@@ -1,7 +1,9 @@
 services:
   - type: web
     name: teacherfind-bot
-    env: python
-    plan: free
+    runtime: python
     buildCommand: ""
-    startCommand: python bot.py
+    startCommand: "python bot.py"
+    envVars:
+      - key: BOT_TOKEN
+        value: YOUR_TOKEN_HERE
